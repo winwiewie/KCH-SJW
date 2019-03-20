@@ -1,4 +1,4 @@
-package com.tg.member;
+package com.tj.board;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,14 +11,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet(value = "/member/add")
-public class MemberAdd extends HttpServlet {
+import com.tg.member.MemberDto;
+
+@WebServlet(value = "/board/add")
+public class BoardAdd extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-		res.sendRedirect("./memberForm.jsp");
+		res.sendRedirect("./boardForm.jsp");
 
 	}
 
@@ -34,30 +37,35 @@ public class MemberAdd extends HttpServlet {
 
 //		req.setCharacterEncoding("UTF-8");
 
-		String emailStr = req.getParameter("email");
-		String pwdStr = req.getParameter("password");
-		String nameStr = req.getParameter("name");
+//		String mnoStr = req.getParameter("mno");
+		HttpSession session = req.getSession();
+		MemberDto memberDto = (MemberDto)session.getAttribute("member");
+		System.out.println(memberDto.getNo());
+		
+		int mnoInt = memberDto.getNo();
+		String titleStr = req.getParameter("title");
+		String bodyStr = req.getParameter("body");
 
 		String sql = "";
-
+		System.out.println(mnoInt);
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, user, password);
 
-			sql = "INSERT INTO MEMBERS";
-			sql += " (MNO, EMAIL, PWD, MNAME, CRE_DATE, MOD_DATE)";
-			sql += " VALUES(MEMBERS_MNO_SEQ.NEXTVAL, ?, ?, ?, SYSDATE, SYSDATE)";
+			sql = "INSERT INTO BOARD";
+			sql += " (BOARD_NO, MNO, TITLE, BODY, CRE_DATE, MOD_DATE)";
+			sql += " VALUES(BOARD_MNO_SEQ.NEXTVAL, ?, ?, ?, SYSDATE, SYSDATE)";
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, emailStr);
-			pstmt.setString(2, pwdStr);
-			pstmt.setString(3, nameStr);
+			pstmt.setInt(1, mnoInt);
+			pstmt.setString(2, titleStr);
+			pstmt.setString(3, bodyStr);
 
 			pstmt.executeUpdate();
 
 			res.sendRedirect("./list");
-
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

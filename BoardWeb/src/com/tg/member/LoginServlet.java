@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -52,7 +50,8 @@ public class LoginServlet extends HttpServlet {
 		String email = req.getParameter("email");
 		String pwd = req.getParameter("password");
 		String name = "";
-
+		int mno = 0;
+		
 		String sql = "";
 		int colIndex = 1; // 컬럼 위치
 
@@ -60,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, user, password);
 
-			sql = "SELECT MNAME, EMAIL";
+			sql = "SELECT MNO,MNAME, EMAIL";
 			sql += " FROM MEMBERS";
 			sql += " WHERE EMAIL = ?";
 			sql += " AND PWD = ?";
@@ -79,9 +78,10 @@ public class LoginServlet extends HttpServlet {
 			if (rs.next()) {
 				email = rs.getString("email");
 				name = rs.getString("mname");
-
+				mno = rs.getInt("mno");
+				
 				MemberDto memberDto = new MemberDto(name, email);
-
+				memberDto.setNo(mno);
 //				memberDto.setEmail(email);
 //				memberDto.setName(name);
 
