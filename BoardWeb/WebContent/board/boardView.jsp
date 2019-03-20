@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,13 +14,13 @@
 	<h1>게시판</h1>
 
 	<table>
-			<tr>
+			<!-- <tr>
 				<td>번호</td>
 				<td>회원이름</td>
 				<td>메일</td>
 				<td>가입일</td>
 				<td></td>
-			</tr>
+			</tr> -->
 		<c:forEach var="boardDto" items="${boardList}">
 			<tr>
 				<td>${boardDto.boardNo}</td>
