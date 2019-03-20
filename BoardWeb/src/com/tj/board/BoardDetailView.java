@@ -15,11 +15,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(value="/board/list")
-public class BoardServlet extends HttpServlet {
+import com.tg.member.MemberDto;
+
+@WebServlet(value="/board/detailView")
+public class BoardDetailView extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -30,17 +33,23 @@ public class BoardServlet extends HttpServlet {
 		String password = "jsp";
 
 		String sql = "";
+		
+		int boardNo = Integer.parseInt(req.getParameter("boardNo"));
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, user, password);
 
-			sql = "SELECT B.BOARD_NO,B.TITLE, M.MNAME,TO_CHAR(B.CRE_DATE, 'YYYY.MM.DD HH24:MI') AS CRE_DATE";
-			sql += " FROM BOARD B,MEMBERS M";
+			sql = "SELECT B.BOARD_NO, B.TITLE, M.MNAME, "
+					+ "TO_CHAR(B.CRE_DATE, 'YYYY.MM.DD HH24:MI') AS CRE_DATE, B.BODY";
+			sql += " FROM BOARD B, MEMBERS M";
 			sql += " WHERE B.MNO = M.MNO";
+			sql += " and b.board_no = ?";
 			sql += " ORDER BY B.BOARD_NO DESC";
 
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, boardNo);
 
 			rs = pstmt.executeQuery();
 			System.out.println("쿼리 수행 성공");
@@ -48,28 +57,28 @@ public class BoardServlet extends HttpServlet {
 			res.setContentType("text/html");
 			res.setCharacterEncoding("UTF-8");
 
-			ArrayList<BoardDto> boardList = new ArrayList<BoardDto>();
-
-			int boardNo = 0;
 			String title = "";
 			String mName = "";
 			String creDate = null;
+			String body = null;
 
-			while (rs.next()) {
+			MemberDto memberDto = null;
+
+			if (rs.next()) {
 				boardNo = rs.getInt("BOARD_NO");
 				title = rs.getString("TITLE");
 				mName = rs.getString("MNAME");
+				body = rs.getString("BODY");
 				creDate = rs.getString("CRE_DATE");
 
-				BoardDto boardDto = new BoardDto(boardNo, mName, title, creDate);
-				boardList.add(boardDto);
+				BoardDto boardDto = new BoardDto(boardNo, mName, title, body, creDate);
+				req.setAttribute("boardDto", boardDto);
 			}
-			
-			req.setAttribute("boardList", boardList);
-			
-			RequestDispatcher dispatcher = 
-					req.getRequestDispatcher("/board/boardView.jsp");
-			
+
+
+			res.setCharacterEncoding("UTF-8");
+			RequestDispatcher dispatcher = req.getRequestDispatcher("./boardDetailView.jsp");
+
 			dispatcher.include(req, res);
 
 		} catch (Exception e) {
@@ -80,7 +89,6 @@ public class BoardServlet extends HttpServlet {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/error.jsp");
 
 			dispatcher.forward(req, res);
-
 		} finally {
 			if (rs != null) {
 				try {
@@ -105,11 +113,13 @@ public class BoardServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-		} // finally end
+		} // finally 종료
+
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
 	}
