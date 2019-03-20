@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<<<<<<< HEAD
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+=======
+    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+>>>>>>> branch 'master' of https://github.com/winwiewie/KCH-SJW.git
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,12 +41,14 @@
 	<h1 style="font-family: serif; ">게시판</h1>
 
 	<table>
+
 			<tr>
 				<td style="width: 50px">번호</td>
 				<td style="width: 500px">제목</td>
 				<td style="width: 100px">작성자</td>
 				<td style="width: 150px">등록시간</td>
 			</tr>
+
 		<c:forEach var="boardDto" items="${boardList}">
 			<tr>
 				<td>${boardDto.boardNo}</td>
