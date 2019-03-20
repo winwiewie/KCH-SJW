@@ -9,10 +9,10 @@ public class BoardDto {
 	private String mName = "";
 	private String title = "";
 	private String body = "";
-	private Date creDate = null;
-	private Date modDate = null;
+	private String creDate = null;
+	private String modDate = null;
 
-	public BoardDto(int boardNo, String mName, String title, Date creDate) {
+	public BoardDto(int boardNo, String mName, String title, String creDate) {
 		super();
 		this.boardNo = boardNo;
 		this.mName = mName;
@@ -20,7 +20,16 @@ public class BoardDto {
 		this.creDate = creDate;
 	}
 
-	public BoardDto(int boardNo, int mNo, String mName, String title, String body, Date creDate, Date modDate) {
+	public BoardDto(int boardNo, String mName, String title, String body, String creDate) {
+		super();
+		this.boardNo = boardNo;
+		this.mName = mName;
+		this.title = title;
+		this.body = body;
+		this.creDate = creDate;
+	}
+
+	public BoardDto(int boardNo, int mNo, String mName, String title, String body, String creDate, String modDate) {
 		super();
 		this.boardNo = boardNo;
 		this.mNo = mNo;
@@ -71,19 +80,19 @@ public class BoardDto {
 		this.body = body;
 	}
 
-	public Date getCreDate() {
+	public String getCreDate() {
 		return creDate;
 	}
 
-	public void setCreDate(Date creDate) {
+	public void setCreDate(String creDate) {
 		this.creDate = creDate;
 	}
 
-	public Date getModDate() {
+	public String getModDate() {
 		return modDate;
 	}
 
-	public void setModDate(Date modDate) {
+	public void setModDate(String modDate) {
 		this.modDate = modDate;
 	}
 

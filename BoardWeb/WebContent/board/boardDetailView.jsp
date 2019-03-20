@@ -9,9 +9,6 @@
 
 <style type="text/css">
 	table {
-		width: auto;
-		margin: auto;
-		text-align: center;
 		border-collapse: collapse;
 	}
 	
@@ -23,9 +20,7 @@
 
 <script type="text/javascript">
 
-	function regsterFnc(){
-		location.href = './board/update';
-	}
+	
 	
 </script>
 
@@ -36,23 +31,17 @@
 	<h1 style="font-family: serif; ">게시판</h1>
 
 	<table>
-			<tr>
-				<td style="width: 50px">번호</td>
-				<td style="width: 500px">제목</td>
-				<td style="width: 100px">작성자</td>
-				<td style="width: 150px">등록시간</td>
-			</tr>
-		<c:forEach var="boardDto" items="${boardList}">
-			<tr>
-				<td>${boardDto.boardNo}</td>
-				<td><a href='./detailView?boardNo=${boardDto.boardNo}'>${boardDto.title}</td>
+		<tr>
 				<td>${boardDto.mName}</td>
 				<td>${boardDto.creDate}</td>
-			</tr>
-		</c:forEach>
+		</tr>
+		<tr>
+			<td colspan="2">${boardDto.title}</td>
+		</tr>
+		<tr>
+			<td colspan="2">${boardDto.body}</td>
+		</tr>
 	</table>
-	<input type="button" value="글쓰기" onclick="regsterFnc()">
-
 
 	<jsp:include page="/Tail.jsp" />
 </body>
