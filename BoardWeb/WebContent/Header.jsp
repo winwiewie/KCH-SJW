@@ -3,10 +3,15 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<div style="background-color: #000086; color: #ffffff; 
-	height: 20px; padding: 5px;">
-
-	SPMS(Simple Project Management System)
+<div style="background-color: #B7F0B1; color: #ffffff; 
+	height: 32px;">
+	
+	<a href='./list'>
+		<img src="../img/images.png" width="80" height="30" alt="KCH-SJW" />
+	</a>
+	
+	
+	
 	<span style="float: right;">
 		<c:if test="${sessionScope.member != null}">
 			${sessionScope.member.name}
