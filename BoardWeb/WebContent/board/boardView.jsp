@@ -20,7 +20,9 @@
 	table, tr, td {
 		border: 1px solid black;
 	}
-	
+	h1{
+		font-family: serif;
+	}
 </style>
 
 <script type="text/javascript">
@@ -41,10 +43,14 @@
 <body>
 	<jsp:include page="/Header.jsp" />
 
-	<h1 style="font-family: serif; ">게시판</h1>
+
 
 	<table>
-
+			<tr>
+				<td colspan="4" style="text-align:left; border:1px solid white; border-bottom:1px solid black;">
+					<h1>게시판</h1>
+				</td>
+			</tr>
 			<tr>
 				<td style="width: 50px">번호</td>
 				<td style="width: 500px">제목</td>
@@ -60,14 +66,23 @@
 				<td>${boardDto.creDate}</td>
 			</tr>
 		</c:forEach>
+			<tr>
+				<td colspan="4" style="height:10px; border: 1px solid white; border-top:1px solid black;">
+				</td>
+			<tr>
+			<tr>
+				<td colspan="4" style="border: 1px solid white; text-align: right">
+					<c:if test="${sessionScope.member != null}">
+						&nbsp;<input type="button" value="글쓰기" onclick="regsterFnc();">
+					</c:if>
+					
+					<c:if test="${sessionScope.member == null}">
+						<input type="button" value="글쓰기" onclick="regFailFnc()">
+					</c:if>
+				</td>
+			</tr>
 	</table>
 	
-	<c:if test="${sessionScope.member != null}">
-		<input type="button" value="글쓰기" onclick="regsterFnc();">
-	</c:if>
-	<c:if test="${sessionScope.member == null}">
-		<input type="button" value="글쓰기" onclick="regFailFnc()">
-	</c:if>
 
 
 	<jsp:include page="/Tail.jsp" />

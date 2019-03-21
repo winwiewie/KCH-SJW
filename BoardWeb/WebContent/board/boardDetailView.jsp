@@ -8,6 +8,9 @@
 <title>게시판 보기</title>
 <style type="text/css">
 	table {
+		width: auto;
+		margin: auto;
+		text-align: center;
 		border-collapse: collapse;
 	}
 	
@@ -16,6 +19,9 @@
 	}
 	li{
 		list-style: none;
+	}
+	h1{
+		font-family: serif;
 	}
 	
 </style>
@@ -33,7 +39,7 @@
 <body>
 	<jsp:include page="/Header.jsp"/>
 	
-	<h1 style="font-family: serif; ">게시판 보기</h1>
+
 	
 	<!-- <input type="button" value="다음글(수정중)" onclick="location.href='./list'"> -->
 	
@@ -42,7 +48,16 @@
 			<ul>
 				<li>
 					<tr>
-						<td style="border: 1px solid white; width:390px;">${boardDto.title}</td>
+						<td colspan="2" style="text-align:left; border:1px solid white;">
+							<h1>게시판 보기</h1>
+						</td>
+					</tr>
+				</li>
+				<li>
+					<tr>
+						<td style="border: 1px solid white; text-align:left; width:390px;">
+						${boardDto.title}
+						</td>
 						<td style="border: 1px solid white; width:210px; text-align:right; padding-right:5px;">
 							${boardDto.creDate}
 						</td>
@@ -50,7 +65,7 @@
 				</li>
 				<li>
 					<tr>
-						<td colspan="2" style="border: 1px solid white;">${boardDto.mName}</td>
+						<td colspan="2" style="border: 1px solid white; text-align:left;">${boardDto.mName}</td>
 					</tr>
 				</li>
 				<li>	
@@ -69,6 +84,21 @@
 						</td>
 					</tr>
 				</li>
+				<li>
+					<tr>
+						<td colspan="2" style="text-align:right; padding-right:3px; padding-top:5px;
+								border: 1px solid white;">
+								
+							 <c:if test="${sessionScope.member.no == boardDto.mNo}">
+								<input type="button" value="수정" 
+								onclick="location.href='./update?boardNo=${boardDto.boardNo}'">
+								
+								<input type="button" value="삭제" onclick="deleteBoardFnc();">
+							</c:if>
+							<input type="button" value="뒤로가기" onclick="location.href='./list'">
+						</td>
+					</tr>
+				</li>
 			</ul>
 		</table>
 		<br/>
@@ -76,11 +106,6 @@
 		<input type="submit" value="추가">
 		<input type="reset" value="취소"> 
 		 -->
-		 <c:if test="${sessionScope.member.no == boardDto.mNo}">
-			<input type="button" value="수정" onclick="location.href='./update?boardNo=${boardDto.boardNo}'">
-			<input type="button" value="삭제" onclick="deleteBoardFnc();">
-		</c:if>
-		<input type="button" value="뒤로가기" onclick="location.href='./list'">
 	</form>
 	<jsp:include page="/Tail.jsp"/>
 
