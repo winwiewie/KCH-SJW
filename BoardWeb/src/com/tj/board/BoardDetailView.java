@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,7 +38,7 @@ public class BoardDetailView extends HttpServlet {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, user, password);
 
-			sql = "SELECT B.BOARD_NO, B.TITLE, M.MNAME, "
+			sql = "SELECT B.BOARD_NO, B.MNO, B.TITLE, M.MNAME, "
 					+ "TO_CHAR(B.CRE_DATE, 'YYYY.MM.DD HH24:MI') AS CRE_DATE, B.BODY";
 			sql += " FROM BOARD B, MEMBERS M";
 			sql += " WHERE B.MNO = M.MNO";
@@ -57,6 +55,7 @@ public class BoardDetailView extends HttpServlet {
 			res.setContentType("text/html");
 			res.setCharacterEncoding("UTF-8");
 
+			int mNo = 0;
 			String title = "";
 			String mName = "";
 			String creDate = null;
@@ -66,12 +65,13 @@ public class BoardDetailView extends HttpServlet {
 
 			if (rs.next()) {
 				boardNo = rs.getInt("BOARD_NO");
+				mNo = rs.getInt("mno");
 				title = rs.getString("TITLE");
 				mName = rs.getString("MNAME");
 				body = rs.getString("BODY");
 				creDate = rs.getString("CRE_DATE");
 
-				BoardDto boardDto = new BoardDto(boardNo, mName, title, body, creDate);
+				BoardDto boardDto = new BoardDto(boardNo, mNo, mName, title, body, creDate);
 				req.setAttribute("boardDto", boardDto);
 			}
 
@@ -79,7 +79,7 @@ public class BoardDetailView extends HttpServlet {
 			res.setCharacterEncoding("UTF-8");
 			RequestDispatcher dispatcher = req.getRequestDispatcher("./boardDetailView.jsp");
 
-			dispatcher.include(req, res);
+			dispatcher.forward(req, res);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

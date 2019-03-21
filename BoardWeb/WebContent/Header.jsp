@@ -12,7 +12,7 @@
 	
 	
 	
-	<span style="float: right;">
+	<span style="float: right; padding:5px">
 		<c:if test="${sessionScope.member != null}">
 			${sessionScope.member.name}
 			<a href="<%=request.getContextPath()%>/auth/logout" style="color:white;">
@@ -22,8 +22,8 @@
 		
 		<c:if test="${sessionScope.member eq null}">
 			게스트
-			<a href="<%=request.getContextPath()%>/auth/logout" style="color:white;">
-				나가기
+			<a href="<%=request.getContextPath()%>/auth/login" style="color:white;">
+				로그인
 			</a>
 		</c:if>
 	</span>

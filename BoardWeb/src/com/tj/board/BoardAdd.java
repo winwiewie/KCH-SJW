@@ -26,8 +26,7 @@ public class BoardAdd extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -39,9 +38,9 @@ public class BoardAdd extends HttpServlet {
 
 //		String mnoStr = req.getParameter("mno");
 		HttpSession session = req.getSession();
-		MemberDto memberDto = (MemberDto)session.getAttribute("member");
+		MemberDto memberDto = (MemberDto) session.getAttribute("member");
 		System.out.println(memberDto.getNo());
-		
+
 		int mnoInt = memberDto.getNo();
 		String titleStr = req.getParameter("title");
 		String bodyStr = req.getParameter("body");
@@ -65,15 +64,14 @@ public class BoardAdd extends HttpServlet {
 			pstmt.executeUpdate();
 
 			res.sendRedirect("./list");
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			// 예외처리 페이지로 위임
 			req.setAttribute("error", e);
-			RequestDispatcher dispatcher = 
-					req.getRequestDispatcher("/error.jsp");
-			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/error.jsp");
+
 			dispatcher.forward(req, res);
 		} finally {
 			if (pstmt != null) {

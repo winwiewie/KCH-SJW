@@ -1,7 +1,5 @@
 package com.tj.board;
 
-import java.util.Date;
-
 public class BoardDto {
 
 	private int boardNo = 0;
@@ -23,6 +21,16 @@ public class BoardDto {
 	public BoardDto(int boardNo, String mName, String title, String body, String creDate) {
 		super();
 		this.boardNo = boardNo;
+		this.mName = mName;
+		this.title = title;
+		this.body = body;
+		this.creDate = creDate;
+	}
+
+	public BoardDto(int boardNo, int mNo, String mName, String title, String body, String creDate) {
+		super();
+		this.boardNo = boardNo;
+		this.mNo = mNo;
 		this.mName = mName;
 		this.title = title;
 		this.body = body;

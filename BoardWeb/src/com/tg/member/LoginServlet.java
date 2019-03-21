@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 			RequestDispatcher rd = req.getRequestDispatcher("./LoginForm.jsp");
 			rd.forward(req, res);
 		} else {
-			String contextPathStr = req.getContextPath() + "/member/list";
+			String contextPathStr = req.getContextPath() + "/board/list";
 			res.sendRedirect(contextPathStr);
 		}
 		
@@ -88,7 +88,7 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				session.setAttribute("member", memberDto);
 
-				res.sendRedirect("../member/list");
+				res.sendRedirect("../board/list");
 			} else {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("./LoginFail.jsp");
 				

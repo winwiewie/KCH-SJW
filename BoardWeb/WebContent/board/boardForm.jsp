@@ -29,7 +29,7 @@
 					<tr>
 						<td style="border: 1px solid white; width:110px;">제목</td>
 						<td style="border: 1px solid white; width:490px;">
-							<input type="text" name="title" value="제목을 입력해주세요" style="width:490px;">
+							<input type="text" name="title" placeholder="제목을 입력해주세요" style="width:490px;">
 						</td>
 					</tr>
 				</li>
@@ -47,7 +47,8 @@
 				<li>
 					<tr>
 						<td colspan="2">
-							<textarea name="body" rows="12" cols="90" style="resize: none;">내용을 입력해주세요</textarea>
+							<textarea name="body" rows="12" cols="90" style="resize: none;"
+							placeholder="내용을 입력해주세요"></textarea>
 						</td>
 					</tr>
 				</li>

@@ -32,7 +32,7 @@ public class LogoutServlet extends HttpServlet {
 		// 일정 시간이 지나면 자동적으로 파기한다
 //		session.setMaxInactiveInterval(60*60);
 		
-		res.sendRedirect("./login");
+		res.sendRedirect("../board/list");
 	}
 	
 }

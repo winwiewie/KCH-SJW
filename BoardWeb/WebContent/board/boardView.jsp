@@ -29,6 +29,12 @@
 		location.href = './add';
 	}
 	
+	function regFailFnc(){
+		alert("로그인을 하셔야 합니다!");
+		
+		location.href = '../auth/login';
+	}
+	
 </script>
 
 </head>
@@ -55,7 +61,13 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<input type="button" value="글쓰기" onclick="regsterFnc()">
+	
+	<c:if test="${sessionScope.member != null}">
+		<input type="button" value="글쓰기" onclick="regsterFnc();">
+	</c:if>
+	<c:if test="${sessionScope.member == null}">
+		<input type="button" value="글쓰기" onclick="regFailFnc()">
+	</c:if>
 
 
 	<jsp:include page="/Tail.jsp" />

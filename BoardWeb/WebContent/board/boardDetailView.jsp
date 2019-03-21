@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,8 +42,8 @@
 			<ul>
 				<li>
 					<tr>
-						<td style="border: 1px solid white; width:110px;">${boardDto.title}</td>
-						<td style="border: 1px solid white; width:490px; text-align:right; padding-right:5px;">
+						<td style="border: 1px solid white; width:390px;">${boardDto.title}</td>
+						<td style="border: 1px solid white; width:210px; text-align:right; padding-right:5px;">
 							${boardDto.creDate}
 						</td>
 					</tr>
@@ -75,9 +76,11 @@
 		<input type="submit" value="추가">
 		<input type="reset" value="취소"> 
 		 -->
-		<input type="button" value="수정" onclick="location.href='./update?boardNo=${boardDto.boardNo}'">
+		 <c:if test="${sessionScope.member.no == boardDto.mNo}">
+			<input type="button" value="수정" onclick="location.href='./update?boardNo=${boardDto.boardNo}'">
+			<input type="button" value="삭제" onclick="deleteBoardFnc();">
+		</c:if>
 		<input type="button" value="뒤로가기" onclick="location.href='./list'">
-		<input type="button" value="삭제" onclick="deleteBoardFnc();">
 	</form>
 	<jsp:include page="/Tail.jsp"/>
 

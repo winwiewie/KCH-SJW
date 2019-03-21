@@ -30,9 +30,9 @@
 			<ul>
 				<li>
 					<tr>
-						<td style="border: 1px solid white; width:110px;">제목: <input 
+						<td style="border: 1px solid white; width:460px;">제목: <input style=" width:410px;" 
 							name="title1" type="text" value="${boardDto.title}"></td>
-						<td style="border: 1px solid white; width:490px; text-align:right; padding-right:5px;">
+						<td style="border: 1px solid white; width:130px; text-align:right; padding-right:5px;">
 							${boardDto.creDate}
 						</td>
 					</tr>
