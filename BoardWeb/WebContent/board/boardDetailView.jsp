@@ -16,7 +16,18 @@
 	li{
 		list-style: none;
 	}
+	
 </style>
+
+<script type="text/javascript">
+
+	function deleteBoardFnc() {
+
+		location.href = './delete?boardNo=' + ${boardDto.boardNo};
+	}
+	
+</script>
+
 </head>
 <body>
 	<jsp:include page="/Header.jsp"/>
@@ -50,7 +61,8 @@
 				<li>
 					<tr>
 						<td colspan="2">
-							<textarea name="body" rows="12" cols="90" style="resize: none;" readonly="readonly">${boardDto.body}</textarea>
+							<textarea name="body" rows="12" cols="90" 
+							style="resize: none; border: 1px solid white;" readonly="readonly">${boardDto.body}</textarea>
 						</td>
 					</tr>
 				</li>
@@ -62,6 +74,7 @@
 		<input type="reset" value="취소"> 
 		 -->
 		<input type="button" value="뒤로가기" onclick="location.href='./list'">
+		<input type="button" value="삭제" onclick="deleteBoardFnc();">
 	</form>
 	<jsp:include page="/Tail.jsp"/>
 
