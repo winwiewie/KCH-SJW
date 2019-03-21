@@ -7,6 +7,9 @@
 <title>게시판 보기</title>
 <style type="text/css">
 	table {
+		width: auto;
+		margin: auto;
+		text-align: center;
 		border-collapse: collapse;
 	}
 	
@@ -16,18 +19,27 @@
 	li{
 		list-style: none;
 	}
+	h1{
+		font-family: serif;
+	}
 </style>
 </head>
 <body>
 	<jsp:include page="/Header.jsp"/>
 	
-	<h1 style="font-family: serif; ">...수정</h1>
 	
 	<!-- <input type="button" value="다음글(수정중)" onclick="location.href='./list'"> -->
 	
 	<form action="./update" method="post">
 		<table  style="width:590px; height:180px;">
 			<ul>
+				<li>
+					<tr>
+						<td colspan="2" style="text-align:left; border:1px solid white;">
+							<h1>...수정</h1>
+						</td>
+					</tr>
+				</li>
 				<li>
 					<tr>
 						<td style="border: 1px solid white; width:460px;">제목: <input style=" width:410px;" 
@@ -39,7 +51,9 @@
 				</li>
 				<li>
 					<tr>
-						<td colspan="2" style="border: 1px solid white;">${boardDto.mName}</td>
+						<td colspan="2" style="text-align:left; border: 1px solid white;">
+							${boardDto.mName}
+						</td>
 					</tr>
 				</li>
 				<li>	
@@ -56,6 +70,16 @@
 						</td>
 					</tr>
 				</li>
+				<li>
+					<tr>
+						<td colspan="2" style="text-align:right; padding-right:3px; padding-top:5px;
+								border: 1px solid white;">
+							<input type="submit" value="수정">
+							<input type="button" value="뒤로가기" 
+							onclick="location.href='./detailView?boardNo=${boardDto.boardNo}'">
+						</td>
+					</tr>
+				</li>
 			</ul>
 		</table>
 		<br/>
@@ -63,8 +87,6 @@
 		<input type="submit" value="추가">
 		<input type="reset" value="취소"> 
 		 -->
-		<input type="submit" value="수정">
-		<input type="button" value="뒤로가기" onclick="location.href='./detailView?boardNo=${boardDto.boardNo}'">
 		
 		
 		<input type="hidden" name="boardNo" value="${boardDto.boardNo}">
