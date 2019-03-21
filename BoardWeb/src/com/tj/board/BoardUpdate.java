@@ -152,7 +152,10 @@ public class BoardUpdate extends HttpServlet {
 
 			pstmt.executeUpdate();
 
-			res.sendRedirect("./detailView");
+			req.setAttribute("boardNo", boardNo);
+			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("./boardUpdateConfirm.jsp");
+			dispatcher.forward(req, res);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
