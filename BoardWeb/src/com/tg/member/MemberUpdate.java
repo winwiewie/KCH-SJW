@@ -56,8 +56,6 @@ public class MemberUpdate extends HttpServlet {
 			String mName = "";
 			String email = "";
 			Date creDate = null;
-
-//			ArrayList<MemberDto> memberList = new ArrayList<MemberDto>();
 			
 			MemberDto memberDto = null;
 			if(rs.next()) {
@@ -73,22 +71,6 @@ public class MemberUpdate extends HttpServlet {
 				memberDto.setEmail(email);
 				memberDto.setCreateDate(creDate);
 			}
-			
-//			while (rs.next()) {
-//				mNo = rs.getInt("MNO");
-//				mName = rs.getString("MNAME");
-//				email = rs.getString("email");
-//				creDate = rs.getDate("cre_date");
-//				
-//				memberDto = new MemberDto();
-//				
-//				memberDto.setNo(mNo);
-//				memberDto.setName(mName);
-//				memberDto.setEmail(email);
-//				memberDto.setCreateDate(creDate);
-//				
-////				memberList.add(memberDto);
-//			}
 
 			req.setAttribute("memberDto", memberDto);
 			

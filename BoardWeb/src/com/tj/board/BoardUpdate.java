@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.tg.member.MemberDto;
 
@@ -33,7 +34,7 @@ public class BoardUpdate extends HttpServlet {
 		String user = "jsp";
 		String password = "jsp";
 
-		int mNo = Integer.parseInt(req.getParameter("no"));
+		int boardNo = Integer.parseInt(req.getParameter("boardNo"));
 
 		String sql = "";
 
@@ -43,65 +44,49 @@ public class BoardUpdate extends HttpServlet {
 
 			conn = DriverManager.getConnection(url, user, password);
 
-			sql = "SELECT MNO, EMAIL, MNAME, CRE_DATE";
-			sql += " FROM MEMBERS";
-			sql += " WHERE MNO = ?";
+			sql = "SELECT B.BOARD_NO, B.TITLE, M.MNAME, "
+					+ "TO_CHAR(B.CRE_DATE, 'YYYY.MM.DD HH24:MI') AS CRE_DATE, B.BODY";
+			sql += " FROM BOARD B, MEMBERS M";
+			sql += " WHERE B.MNO = M.MNO";
+			sql += " and b.board_no = ?";
+			sql += " ORDER BY B.BOARD_NO DESC";
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setInt(1, mNo);
+			pstmt.setInt(1, boardNo);
 
 			rs = pstmt.executeQuery();
 
+			String title = "";
 			String mName = "";
-			String email = "";
-			Date creDate = null;
+			String creDate = null;
+			String body = null;
 
-//			ArrayList<MemberDto> memberList = new ArrayList<MemberDto>();
-			
 			MemberDto memberDto = null;
-			if(rs.next()) {
-				mNo = rs.getInt("MNO");
-				mName = rs.getString("MNAME");
-				email = rs.getString("email");
-				creDate = rs.getDate("cre_date");
-				
-				memberDto = new MemberDto();
-				
-				memberDto.setNo(mNo);
-				memberDto.setName(mName);
-				memberDto.setEmail(email);
-				memberDto.setCreateDate(creDate);
-			}
-			
-//			while (rs.next()) {
-//				mNo = rs.getInt("MNO");
-//				mName = rs.getString("MNAME");
-//				email = rs.getString("email");
-//				creDate = rs.getDate("cre_date");
-//				
-//				memberDto = new MemberDto();
-//				
-//				memberDto.setNo(mNo);
-//				memberDto.setName(mName);
-//				memberDto.setEmail(email);
-//				memberDto.setCreateDate(creDate);
-//				
-////				memberList.add(memberDto);
-//			}
 
-			req.setAttribute("memberDto", memberDto);
-			
+			if (rs.next()) {
+				boardNo = rs.getInt("BOARD_NO");
+				title = rs.getString("TITLE");
+				mName = rs.getString("MNAME");
+				body = rs.getString("BODY");
+				creDate = rs.getString("CRE_DATE");
+
+				BoardDto boardDto = new BoardDto(boardNo, mName, title, body, creDate);
+				req.setAttribute("boardDto", boardDto);
+			}
+
 			res.setCharacterEncoding("UTF-8");
 			RequestDispatcher dispatcher = 
-					req.getRequestDispatcher("./memberUpdateForm.jsp");
+					req.getRequestDispatcher("./boardUpdateView.jsp");
 			
 			dispatcher.include(req, res);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			// 나중에 예외 처리
+			// 예외처리 페이지로 위임
+			req.setAttribute("error", e);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/error.jsp");
 		} finally {
 			if (rs != null) {
 				try {
@@ -143,36 +128,40 @@ public class BoardUpdate extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 
-		String email = req.getParameter("email");
-		String name = req.getParameter("name");
-		int mNo = Integer.parseInt(req.getParameter("no"));
-
+		String title = req.getParameter("title1");
+		String body = req.getParameter("body1");
+		int boardNo = Integer.parseInt(req.getParameter("boardNo"));
+		System.out.println(title);
+		System.out.println(body);
+		System.out.println(boardNo);
 		String sql = "";
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, user, password);
 
-			sql = "UPDATE MEMBERS";
-			sql += " SET EMAIL = ?, MNAME = ?, MOD_DATE = SYSDATE";
-			sql += " WHERE MNO = ?";
+			sql = "UPDATE BOARD";
+			sql += " SET TITLE = ?, BODY = ?, MOD_DATE = SYSDATE";
+			sql += " WHERE BOARD_NO = ?";
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, email);
-			pstmt.setString(2, name);
-			pstmt.setInt(3, mNo);
+			pstmt.setString(1, title);
+			pstmt.setString(2, body);
+			pstmt.setInt(3, boardNo);
 
 			pstmt.executeUpdate();
 
-			res.sendRedirect("./list");
+			res.sendRedirect("./detailView");
 
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// 예외처리 페이지로 위임
+			req.setAttribute("error", e);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/error.jsp");
+
+			dispatcher.forward(req, res);
 		} finally {
 			if (pstmt != null) {
 				try {
