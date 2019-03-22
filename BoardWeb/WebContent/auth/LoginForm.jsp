@@ -50,11 +50,17 @@
 %>
 
 <body>
+
+	<jsp:include page="/Header.jsp"/>
+
 	<h2>사용자 로그인</h2>
 	<form action="./login" id="loginForm" method="post">
 		이메일: <input type="text" id="email" name="email"><br> 
 		암호: <input type="password" id="password" name="password"><br> 
 		<input type="button" value="로그인" onclick="loginSubmitFnc();">
+		<input type="button" value="회원가입" onclick="location.href='../member/add'">
 	</form>
+	
+	<jsp:include page="/Tail.jsp" />
 </body>
 </html>

@@ -6,7 +6,7 @@
 <div style="background-color: #B7F0B1; color: #000000; 
 	height: 32px;">
 	
-	<a href='./list'>
+	<a href='../board/list'>
 		<img src="../img/images.png" width="80" height="30" alt="KCH-SJW" />
 	</a>
 	

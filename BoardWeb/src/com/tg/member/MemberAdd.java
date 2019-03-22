@@ -56,7 +56,7 @@ public class MemberAdd extends HttpServlet {
 
 			pstmt.executeUpdate();
 
-			res.sendRedirect("./list");
+			res.sendRedirect("../board/list");
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
